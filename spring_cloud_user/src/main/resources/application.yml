@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.10.169:8081/eureka/
+
+spring:
+  application:
+    name: userService
+  datasource:
+    druid:
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
+      filters: stat,wall
+      initial-size: 5
+      max-active: 50
+      max-wait: 30
+      min-idle: 10
+      url: jdbc:mysql://127.0.0.1:3306/spring_cloud?allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=yes&characterEncoding=utf8
+      username: root
+      password: root
+      validation-query: select 'x'
+      #druid recycle
+      removeAbandoned: true
+      removeAbandonedTimeout: 300
+      logAbandoned: false
+mybatis-plus:
+  global-config:
+    db-config:
+      column-like: true
+  mapper-locations: classpath:mappers/**/*.xml
+  type-aliases-package: com.qihao.pojo
+  configuration:
+    call-setters-on-nulls: true  # 返回map类型，字段为null显示，默认false不显示
