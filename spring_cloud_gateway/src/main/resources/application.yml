@@ -1,0 +1,22 @@
+server:
+  port: 8083
+
+eureka:
+  client:
+    # Eureka Server地址
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+
+spring:
+  application:
+    name: gatewayService
+  cloud:
+    gateway:
+      routes:
+        - id: route-order-service
+          uri: ${order.uri}
+          predicates:
+            - Path=/order/**
+
+order:
+  uri: lb://orderService
